@@ -1,5 +1,6 @@
 btnStart = document.querySelector('[data-action="start"]');
 btnStop = document.querySelector('[data-action="stop"]');
+body = document.querySelector('body');
 
 const colors = [
   '#FFFFFF',
@@ -11,14 +12,34 @@ const colors = [
 ];
 
 const colorMixer = {
+  intervalId: null,
+  isActive: false,
   start() {
-    setInterval(() => {
-      const randomColor = randomIntegerFromInterval(colors[0], colors[5]);
-      console.log(randomColor);
+    if (this.isActive) {
+      return;
+    }
+    this.isActive = true;
+    intervalId = setInterval(() => {
+      updateColor(colors);
     }, 1000);
   },
+  stop() {
+    clearInterval(intervalId);
+    this.isActive = false;
+  },
 };
+console.log(colorMixer);
 
-const randomIntegerFromInterval = (min, max) => {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-};
+btnStart.addEventListener('click', colorMixer.start.bind(colorMixer));
+btnStop.addEventListener('click', colorMixer.stop.bind(colorMixer));
+
+function updateColor(array) {
+  const randomIntegerFromInterval = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  };
+  const arrayIndx = array.map((num, idx) => idx);
+  const idxMax = Math.max(...arrayIndx);
+  const idxMin = Math.min(...arrayIndx);
+  const randomColor = randomIntegerFromInterval(idxMin, idxMax);
+  body.bgColor = array[randomColor];
+}
