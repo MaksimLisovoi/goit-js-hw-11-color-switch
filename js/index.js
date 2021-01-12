@@ -43,5 +43,5 @@ function updateColor(array) {
   const idxMax = Math.max(...arrayIndx);
   const idxMin = Math.min(...arrayIndx);
   const randomColor = randomIntegerFromInterval(idxMin, idxMax);
-  body.bgColor = array[randomColor];
+  body.style.backgroundColor = array[randomColor];
 }
