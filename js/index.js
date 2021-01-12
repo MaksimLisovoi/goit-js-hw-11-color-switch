@@ -18,6 +18,7 @@ const colorMixer = {
     if (this.isActive) {
       return;
     }
+    btnStart.setAttribute('disabled', 'true');
     this.isActive = true;
     intervalId = setInterval(() => {
       updateColor(colors);
@@ -26,6 +27,7 @@ const colorMixer = {
   stop() {
     clearInterval(intervalId);
     this.isActive = false;
+    btnStart.removeAttribute('disabled');
   },
 };
 console.log(colorMixer);
